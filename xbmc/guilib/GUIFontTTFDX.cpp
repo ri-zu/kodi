@@ -25,7 +25,9 @@
 #include "Texture.h"
 #include "windowing/WindowingFactory.h"
 #include "utils/log.h"
-
+#ifdef HAS_DS_PLAYER
+#include "Application.h"
+#endif
 // stuff for freetype
 #include <ft2build.h>
 
@@ -83,6 +85,11 @@ void CGUIFontTTFDX::LastEnd()
   // no chars to render
   if (m_vertex.empty() && transIsEmpty)
     return;
+
+#ifdef HAS_DS_PLAYER
+  // Render count to detect when the GUI it's active or deactive (useful for madVR latency mode)
+  g_application.m_pPlayer->IncRenderCount();
+#endif
 
   CreateStaticIndexBuffer();
 

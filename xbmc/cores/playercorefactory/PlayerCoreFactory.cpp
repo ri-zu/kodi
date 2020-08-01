@@ -27,6 +27,9 @@
 #include "FileItem.h"
 #include "profiles/ProfilesManager.h"
 #include "settings/AdvancedSettings.h"
+#ifdef HAS_DS_PLAYER
+#include "DSPlayer.h"
+#endif
 #include "PlayerCoreConfig.h"
 #include "PlayerSelectionRule.h"
 #include "guilib/LocalizeStrings.h"
@@ -120,6 +123,12 @@ void CPlayerCoreFactory::GetPlayers(const CFileItem& item, std::vector<std::stri
   // Also push these players in case it is NOT audio either
   if (item.IsVideo() || !item.IsAudio())
   {
+#ifdef HAS_DS_PLAYER
+    if (CSettings::GetInstance().GetBool(CSettings::SETTING_DSPLAYER_DEFAULTVIDEOPLAYER))
+    {
+      players.push_back("DSPlayer");
+    }
+#endif
     int idx = GetPlayerIndex("videodefaultplayer");
     if (idx > -1)
     {
@@ -323,6 +332,14 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
     CPlayerCoreConfig* paplayer = new CPlayerCoreConfig("PAPlayer", "music", nullptr);
     paplayer->m_bPlaysAudio = true;
     m_vecPlayerConfigs.push_back(paplayer);
+
+#ifdef HAS_DS_PLAYER
+    // Builtin players
+    CPlayerCoreConfig* DSPlayer = new CPlayerCoreConfig("DSPlayer", "dsplayer", nullptr);
+    DSPlayer->m_bPlaysAudio = true;
+    DSPlayer->m_bPlaysVideo = true;
+    m_vecPlayerConfigs.push_back(DSPlayer);
+#endif
   }
 
   if (!pConfig || strcmpi(pConfig->Value(), "playercorefactory") != 0)
@@ -349,6 +366,10 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
         internaltype = "music";
       else if (type == "externalplayer")
         internaltype = "external";
+#ifdef HAS_DS_PLAYER
+      else if (type == "dsplayer")
+        internaltype = "dsplayer";
+#endif
 
       int count = 0;
       std::string playername = name;

@@ -1,4 +1,4 @@
-@ECHO OFF
+﻿@ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 REM setup all paths
 SET cur_dir=%CD%
@@ -102,7 +102,7 @@ set WORKSPACE=%CD%\..\..\kodi-build
   MKDIR %WORKSPACE%
   PUSHD %WORKSPACE%
 
-  cmake.exe -G "Visual Studio 14" %base_dir%\project\cmake
+  cmake.exe -G "Visual Studio 14 2015 Win64" %base_dir%\project\cmake
   IF %errorlevel%==1 (
     set DIETEXT="%APP_NAME%.EXE failed to build!"
     goto DIE
@@ -172,6 +172,8 @@ set WORKSPACE=%CD%\..\..\kodi-build
   xcopy %WORKSPACE%\system BUILD_WIN32\application\system /E /Q /I /Y /EXCLUDE:exclude.txt+exclude_dll.txt  > NUL
   xcopy %WORKSPACE%\media BUILD_WIN32\application\media /E /Q /I /Y /EXCLUDE:exclude.txt  > NUL
 
+  xcopy ..\..\system\players\dsplayer BUILD_WIN32\application\system\players\dsplayer /E /Q /I /Y /EXCLUDE:exclude.txt > NUL
+
   REM create AppxManifest.xml
   "%sed_exe%" -e s/@APP_NAME@/%APP_NAME%/g -e s/@COMPANY_NAME@/%COMPANY_NAME%/g -e s/@APP_VERSION@/%APP_VERSION%/g -e s/@VERSION_NUMBER@/%VERSION_NUMBER%/g "AppxManifest.xml.in" > "BUILD_WIN32\application\AppxManifest.xml"
 
@@ -217,8 +219,8 @@ set WORKSPACE=%CD%\..\..\kodi-build
   ECHO ------------------------------------------------------------
   call getdeploydependencies.bat
   CALL extract_git_rev.bat > NUL
-  SET APP_SETUPFILE=%APP_NAME%Setup-%GIT_REV%-%BRANCH%-x86.exe
-  SET APP_PDBFILE=%APP_NAME%Setup-%GIT_REV%-%BRANCH%-x86.pdb
+  SET APP_SETUPFILE=%APP_NAME%Setup-%GIT_REV%-%BRANCH%-x64.exe
+  SET APP_PDBFILE=%APP_NAME%Setup-%GIT_REV%-%BRANCH%-x64.pdb
   ECHO Creating installer %APP_SETUPFILE%...
   IF EXIST %APP_SETUPFILE% del %APP_SETUPFILE% > NUL
   rem get path to makensis.exe from registry, first try tab delim

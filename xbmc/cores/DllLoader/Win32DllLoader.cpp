@@ -89,6 +89,9 @@ Export win32_exports[] =
   { "fgets",                      -1, (void*)dll_fgets,                     NULL },
   { "fopen",                      -1, (void*)dll_fopen,                     (void*)track_fopen},
   { "fopen_s",                    -1, (void*)dll_fopen_s,                   NULL },
+#ifdef HAS_DS_PLAYER
+  { "_wfopen",                    -1, (void*)dll_wfopen,                    (void*)track_wfopen},
+#endif
   { "putc",                       -1, (void*)dll_putc,                      NULL },
   { "fputc",                      -1, (void*)dll_fputc,                     NULL },
   { "fputs",                      -1, (void*)dll_fputs,                     NULL },
@@ -312,7 +315,7 @@ void Win32DllLoader::OverrideImports(const std::string &dll)
         VirtualProtect((PVOID)&first_thunk[j].u1.Function, 4, PAGE_EXECUTE_READWRITE, &old_prot);
 
         // patch the address of function to point to our overridden version
-        first_thunk[j].u1.Function = (DWORD)fixup;
+        first_thunk[j].u1.Function = (uintptr_t)fixup;
 
         // reset to old settings
         VirtualProtect((PVOID)&first_thunk[j].u1.Function, 4, old_prot, &old_prot);
@@ -358,7 +361,7 @@ void Win32DllLoader::RestoreImports()
     DWORD old_prot = 0;
     VirtualProtect(import.table, 4, PAGE_EXECUTE_READWRITE, &old_prot);
 
-    *(DWORD *)import.table = import.function;
+    *static_cast<uintptr_t *>(import.table) = import.function;
 
     // reset to old settings
     VirtualProtect(import.table, 4, old_prot, &old_prot);

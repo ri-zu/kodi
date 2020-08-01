@@ -150,6 +150,19 @@
 /* Game related include files */
 #include "games/controllers/windows/GUIControllerWindow.h"
 
+#ifdef HAS_DS_PLAYER
+#include "cores/DSPlayer/GUIDialogShaderList.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogDSRules.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogDSFilters.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogDSPlayercoreFactory.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogLAVVideo.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogLAVAudio.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogLAVSplitter.h"
+#include "cores/DSPlayer/Dialogs/GUIDIalogMadvrSettings.h"
+#include "cores/DSPlayer/Dialogs/GUIDIalogSanear.h"
+#include "cores/DSPlayer/Dialogs/GUIDialogDSPlayerProcessInfo.h"
+#endif
+
 using namespace PVR;
 using namespace PERIPHERALS;
 using namespace KODI::MESSAGING;
@@ -224,6 +237,17 @@ void CGUIWindowManager::CreateWindows()
 #endif
   Add(new CGUIDialogVideoSettings);
   Add(new CGUIDialogAudioSubtitleSettings);
+#ifdef HAS_DS_PLAYER
+  Add(new CGUIDialogDSRules);
+  Add(new CGUIDialogDSFilters);
+  Add(new CGUIDialogDSPlayercoreFactory);
+  Add(new CGUIDialogLAVVideo);
+  Add(new CGUIDialogLAVAudio);
+  Add(new CGUIDialogLAVSplitter);
+  Add(new CGUIDialogMadvrSettings);
+  Add(new CGUIDialogSanear);
+  Add(new CGUIDialogDSPlayerProcessInfo);
+#endif
   Add(new CGUIDialogVideoBookmarks);
   // Don't add the filebrowser dialog - it's created and added when it's needed
   Add(new CGUIDialogNetworkSetup);
@@ -339,6 +363,17 @@ bool CGUIWindowManager::DestroyWindows()
     Delete(WINDOW_DIALOG_CMS_OSD_SETTINGS);
     Delete(WINDOW_DIALOG_VIDEO_OSD_SETTINGS);
     Delete(WINDOW_DIALOG_AUDIO_OSD_SETTINGS);
+#ifdef HAS_DS_PLAYER
+    Delete(WINDOW_DIALOG_DSRULES);
+    Delete(WINDOW_DIALOG_DSFILTERS);
+    Delete(WINDOW_DIALOG_DSPLAYERCORE);
+    Delete(WINDOW_DIALOG_MADVR);
+    Delete(WINDOW_DIALOG_LAVVIDEO);
+    Delete(WINDOW_DIALOG_LAVAUDIO);
+    Delete(WINDOW_DIALOG_LAVSPLITTER);
+    Delete(WINDOW_DIALOG_SANEAR);
+    Delete(WINDOW_DIALOG_DSPLAYER_PROCESS_INFO);
+#endif
     Delete(WINDOW_DIALOG_VIDEO_BOOKMARKS);
     Delete(WINDOW_DIALOG_CONTENT_SETTINGS);
     Delete(WINDOW_DIALOG_FAVOURITES);
@@ -1039,7 +1074,29 @@ void CGUIWindowManager::RenderPass() const
   for (iDialog it = renderList.begin(); it != renderList.end(); ++it)
   {
     if ((*it)->IsDialogRunning())
+#ifdef HAS_DS_PLAYER
+    {
+      // Don't show video settings dialog under madVR/lavvideo/lavaudio/lavsplitter settings
+      if ((*it)->GetID() == WINDOW_DIALOG_VIDEO_OSD_SETTINGS)
+      {
+        CGUIDialog* pDialogMadvr = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_MADVR);
+        CGUIDialog* pDialogLAVVideo = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_LAVVIDEO);
+        CGUIDialog* pDialogLAVAudio = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_LAVAUDIO);
+        CGUIDialog* pDialogLAVSplitter = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_LAVSPLITTER);
+        CGUIDialog* pDialogSanear = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_SANEAR);
+
+        if ((pDialogMadvr && pDialogMadvr->IsDialogRunning())
+          || (pDialogLAVVideo && pDialogLAVVideo->IsDialogRunning())
+          || (pDialogLAVAudio && pDialogLAVAudio->IsDialogRunning())
+          || (pDialogLAVSplitter && pDialogLAVSplitter->IsDialogRunning())
+          || (pDialogSanear && pDialogSanear->IsDialogRunning()))
+          continue;
+      }
       (*it)->DoRender();
+    }
+#else
+      (*it)->DoRender();
+#endif
   }
 }
 
@@ -1065,6 +1122,10 @@ bool CGUIWindowManager::Render()
 {
   assert(g_application.IsCurrentThread());
   CSingleExit lock(g_graphicsContext);
+
+#ifdef HAS_DS_PLAYER
+  g_application.m_pPlayer->RenderToTexture(RENDER_LAYER_UNDER);
+#endif
 
   CDirtyRegionList dirtyRegions = m_tracker.GetDirtyRegions();
 
@@ -1426,6 +1487,10 @@ int CGUIWindowManager::GetFocusedWindow() const
 
 bool CGUIWindowManager::IsWindowActive(int id, bool ignoreClosing /* = true */) const
 {
+#ifdef HAS_DS_PLAYER
+  if (id == WINDOW_DIALOG_PLAYER_PROCESS_INFO && IsWindowActive(WINDOW_DIALOG_DSPLAYER_PROCESS_INFO, ignoreClosing))
+    return true;
+#endif
   // mask out multiple instances of the same window
   id &= WINDOW_ID_MASK;
   if ((GetActiveWindow() & WINDOW_ID_MASK) == id) return true;

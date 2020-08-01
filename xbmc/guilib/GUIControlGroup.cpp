@@ -24,6 +24,9 @@
 #include <utility>
 
 #include "guiinfo/GUIInfoLabels.h"
+#ifdef HAS_DS_PLAYER
+#include "Application.h"
+#endif
 
 CGUIControlGroup::CGUIControlGroup()
 {
@@ -121,7 +124,7 @@ void CGUIControlGroup::Render()
   {
     if (m_renderFocusedLast && control->HasFocus())
       focusedControl = control;
-    else
+    else     
       control->DoRender();
   }
   if (focusedControl)

@@ -50,6 +50,10 @@
 #include "Util.h"
 #include "messaging/ApplicationMessenger.h"
 
+#ifdef HAS_DS_PLAYER
+#include "DSPlayer.h"
+#endif
+
 #ifdef TARGET_WINDOWS
 
 using namespace PERIPHERALS;
@@ -243,7 +247,7 @@ void DIB_InitOSKeymap()
   }
 }
 
-static int XBMC_MapVirtualKey(int scancode, int vkey)
+static int XBMC_MapVirtualKey(int scancode, WPARAM vkey)
 {
   int mvke = MapVirtualKeyEx(scancode & 0xFF, 1, NULL);
 
@@ -416,7 +420,7 @@ LRESULT CALLBACK CWinEventsWin32::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
   if (uMsg == WM_CREATE)
   {
     g_hWnd = hWnd;
-    SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG)(((LPCREATESTRUCT)lParam)->lpCreateParams));
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(reinterpret_cast<LPCREATESTRUCT>(lParam)->lpCreateParams));
     DIB_InitOSKeymap();
     g_uQueryCancelAutoPlay = RegisterWindowMessage(TEXT("QueryCancelAutoPlay"));
     shcne.pidl = NULL;
@@ -626,14 +630,34 @@ LRESULT CALLBACK CWinEventsWin32::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         g_Windowing.ShowOSMouse(true);
       break;
     case WM_MOUSEMOVE:
-      newEvent.type = XBMC_MOUSEMOTION;
+#ifdef HAS_DS_PLAYER
+      if (g_application.GetCurrentPlayer() == "DSPlayer")
+      {
+        if (g_application.m_pPlayer && g_application.m_pPlayer->IsInMenu())
+        {
+          CDSPlayer::PostMessage(new CDSMsgInt(CDSMsg::PLAYER_DVD_MOUSE_MOVE, lParam), false);
+          return(0);
+        }
+      }
+#endif
+	  newEvent.type = XBMC_MOUSEMOTION;
       newEvent.motion.x = GET_X_LPARAM(lParam);
       newEvent.motion.y = GET_Y_LPARAM(lParam);
       newEvent.motion.state = 0;
       m_pEventFunc(newEvent);
       return(0);
     case WM_LBUTTONDOWN:
-    case WM_MBUTTONDOWN:
+#ifdef HAS_DS_PLAYER
+      if (g_application.GetCurrentPlayer() == "DSPlayer")
+      {
+        if (g_application.m_pPlayer && g_application.m_pPlayer->IsInMenu())
+        {
+          CDSPlayer::PostMessage(new CDSMsgInt(CDSMsg::PLAYER_DVD_MOUSE_CLICK, lParam), false);
+          return(0);
+        }
+      }
+#endif
+	case WM_MBUTTONDOWN:
     case WM_RBUTTONDOWN:
       newEvent.type = XBMC_MOUSEBUTTONDOWN;
       newEvent.button.state = XBMC_PRESSED;
@@ -693,8 +717,38 @@ LRESULT CALLBACK CWinEventsWin32::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
       }
       return(0);
     case WM_DISPLAYCHANGE:
-      CLog::Log(LOGDEBUG, __FUNCTION__": display change event");  
-      if (g_application.GetRenderGUI() && !g_Windowing.IsAlteringWindow() && GET_X_LPARAM(lParam) > 0 && GET_Y_LPARAM(lParam) > 0)  
+#ifdef HAS_DS_PLAYER
+    {
+      CLog::Log(LOGDEBUG, __FUNCTION__": display change event");
+      if (g_application.GetRenderGUI() && GET_X_LPARAM(lParam) > 0 && GET_Y_LPARAM(lParam) > 0)
+      {
+        if (g_application.m_pPlayer->GetCurrentPlayer() == "DSPlayer")
+        {
+          g_application.m_pPlayer->DisplayChange(!g_Windowing.IsAlteringWindow());
+        }
+        else if (!g_Windowing.IsAlteringWindow())
+        {
+          g_Windowing.UpdateResolutions();
+          if (g_advancedSettings.m_fullScreen)
+          {
+            newEvent.type = XBMC_VIDEOMOVE;
+            newEvent.move.x = 0;
+            newEvent.move.y = 0;
+          }
+          else
+          {
+            newEvent.type = XBMC_VIDEORESIZE;
+            newEvent.resize.w = GET_X_LPARAM(lParam);
+            newEvent.resize.h = GET_Y_LPARAM(lParam);
+          }
+          m_pEventFunc(newEvent);
+        }
+      }
+      return(0);
+    }
+#else
+      CLog::Log(LOGDEBUG, __FUNCTION__": display change event");
+      if (g_application.GetRenderGUI() && !g_Windowing.IsAlteringWindow() && GET_X_LPARAM(lParam) > 0 && GET_Y_LPARAM(lParam) > 0)
       {
         g_Windowing.UpdateResolutions();
         if (g_advancedSettings.m_fullScreen)  
@@ -711,8 +765,12 @@ LRESULT CALLBACK CWinEventsWin32::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         }
         m_pEventFunc(newEvent);
       }
-      return(0);  
+      return(0);
+#endif
     case WM_SIZE:
+#ifdef HAS_DS_PLAYER
+      PostMessage(CDSPlayer::GetDShWnd(), uMsg, wParam, lParam);
+#endif
       newEvent.type = XBMC_VIDEORESIZE;
       newEvent.resize.w = GET_X_LPARAM(lParam);
       newEvent.resize.h = GET_Y_LPARAM(lParam);
@@ -840,7 +898,12 @@ LRESULT CALLBACK CWinEventsWin32::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
       CZeroconfBrowser::GetInstance()->ProcessResults();
       break;
   }
+#ifdef HAS_DS_PLAYER
+  LRESULT ret = 0;
+  return (g_application.m_pPlayer->ParentWindowProc(hWnd, uMsg, &wParam, &lParam, &ret)) ? ret : DefWindowProc(hWnd, uMsg, wParam, lParam);
+#else
   return(DefWindowProc(hWnd, uMsg, wParam, lParam));
+#endif
 }
 
 void CWinEventsWin32::RegisterDeviceInterfaceToHwnd(GUID InterfaceClassGuid, HWND hWnd, HDEVNOTIFY *hDeviceNotify)

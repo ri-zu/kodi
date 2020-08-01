@@ -344,6 +344,22 @@
       <menu>OSD</menu>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <o mod="ctrl,shift">PlayerDebug</o>
       <z>AspectRatio</z>
       <zoom>AspectRatio</zoom>
@@ -387,6 +403,22 @@
       <r>Rewind</r>
       <period>StepForward</period>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <i>Back</i>
       <d mod="ctrl">Back</d>
       <m>OSD</m>
@@ -428,6 +460,22 @@
       <up>SkipNext</up>
       <down>SkipPrevious</down>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <l>LockPreset</l>
       <escape>FullScreen</escape>
       <g>ActivateWindow(PVROSDGuide)</g>
@@ -444,6 +492,22 @@
       <menu>Back</menu>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <p>ActivateWindow(VisualisationPresetList)</p>
       <v>Addon.Default.OpenSettings(xbmc.player.musicviz)</v>
       <text>Addon.Default.OpenSettings(xbmc.player.musicviz)</text>
@@ -459,6 +523,22 @@
       <m>Back</m>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <p>Back</p>
       <v>Back</v>
       <text>Back</text>
@@ -511,6 +591,22 @@
       <g mod="ctrl">Back</g> <!-- MCE Guide button -->
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
     </keyboard>
   </VideoOSD>
   <VideoMenu>
@@ -521,6 +617,22 @@
       <menu>OSD</menu>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
       <z>AspectRatio</z>
       <zoom>AspectRatio</zoom>
       <t>ShowSubtitles</t>
@@ -537,12 +649,44 @@
     <keyboard>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
     </keyboard>
   </OSDVideoSettings>
   <OSDAudioSettings>
     <keyboard>
       <i>Info</i>
       <o>PlayerProcessInfo</o>
+      <one mod ="longpress">LoadDSPlayerSettings1</one>
+      <two mod ="longpress">LoadDSPlayerSettings2</two>
+      <three mod ="longpress">LoadDSPlayerSettings3</three>
+      <four mod ="longpress">LoadDSPlayerSettingsSD</four>
+      <five mod ="longpress">LoadDSPlayerSettings720</five>
+      <six mod ="longpress">LoadDSPlayerSettings1080</six>
+      <seven mod ="longpress">LoadDSPlayerSettings2160</seven>
+      <zero mod ="longpress">LoadDSPlayerSettingsAtStart</zero>
+      <numpadone mod ="longpress">LoadDSPlayerSettings1</numpadone>
+      <numpadtwo mod ="longpress">LoadDSPlayerSettings2</numpadtwo>
+      <numpadthree mod ="longpress">LoadDSPlayerSettings3</numpadthree>
+      <numpadfour mod ="longpress">LoadDSPlayerSettingsSD</numpadfour>
+      <numpadfive mod ="longpress">LoadDSPlayerSettings720</numpadfive>
+      <numpadsix mod ="longpress">LoadDSPlayerSettings1080</numpadsix>
+      <numpadseven mod ="longpress">LoadDSPlayerSettings2160</numpadseven>
+      <numpadzero mod ="longpress">LoadDSPlayerSettingsAtStart</numpadzero>
     </keyboard>
   </OSDAudioSettings>
   <VideoBookmarks>

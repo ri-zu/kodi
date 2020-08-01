@@ -41,6 +41,10 @@
 #include "utils/XBMCTinyXML.h"
 #include "XBIRRemote.h"
 
+#ifdef HAS_DS_PLAYER
+#include "settings/AdvancedSettings.h"
+#endif
+
 using namespace XFILE;
 
 typedef struct
@@ -90,6 +94,16 @@ static const ActionMapping actions[] =
     { "playerdebug"              , ACTION_PLAYER_DEBUG },
     { "codecinfo"                , ACTION_PLAYER_PROCESS_INFO },
     { "playerprocessinfo"        , ACTION_PLAYER_PROCESS_INFO },
+#ifdef HAS_DS_PLAYER
+    { "loaddsplayersettings1"       , ACTION_DSPLAYER_USERSETTINGS_1 },
+    { "loaddsplayersettings2"       , ACTION_DSPLAYER_USERSETTINGS_2 },
+    { "loaddsplayersettings3"       , ACTION_DSPLAYER_USERSETTINGS_3 },  
+    { "loaddsplayersettingssd"       , ACTION_DSPLAYER_USERSETTINGS_SD },
+    { "loaddsplayersettings720"      , ACTION_DSPLAYER_USERSETTINGS_720 },
+    { "loaddsplayersettings1080"     , ACTION_DSPLAYER_USERSETTINGS_1080 },
+    { "loaddsplayersettings2160"     , ACTION_DSPLAYER_USERSETTINGS_2160 },
+    { "loaddsplayersettingsatstart" , ACTION_DSPLAYER_USERSETTINGS_ATSTART },
+#endif
     { "nextpicture"              , ACTION_NEXT_PICTURE },
     { "previouspicture"          , ACTION_PREV_PICTURE },
     { "zoomout"                  , ACTION_ZOOM_OUT },
@@ -360,6 +374,7 @@ static const ActionMapping windows[] =
     { "osdcmssettings"           , WINDOW_DIALOG_CMS_OSD_SETTINGS },
     { "osdvideosettings"         , WINDOW_DIALOG_VIDEO_OSD_SETTINGS },
     { "osdaudiosettings"         , WINDOW_DIALOG_AUDIO_OSD_SETTINGS },
+
     { "audiodspmanager"          , WINDOW_DIALOG_AUDIO_DSP_MANAGER },
     { "osdaudiodspsettings"      , WINDOW_DIALOG_AUDIO_DSP_OSD_SETTINGS },
     { "videobookmarks"           , WINDOW_DIALOG_VIDEO_BOOKMARKS },
@@ -392,6 +407,16 @@ static const ActionMapping windows[] =
     { "fullscreenradio"          , WINDOW_FULLSCREEN_RADIO },          // virtual window for fullscreen radio, uses WINDOW_VISUALISATION as fallback
     { "visualisation"            , WINDOW_VISUALISATION },
     { "slideshow"                , WINDOW_SLIDESHOW },
+#ifdef HAS_DS_PLAYER
+    { "dsrulesettings"           , WINDOW_DIALOG_DSRULES },
+    { "dsfiltersettings"         , WINDOW_DIALOG_DSFILTERS },
+    { "dsplayercoresettings"     , WINDOW_DIALOG_DSPLAYERCORE },
+    { "dsplayerlavvideo"         , WINDOW_DIALOG_LAVVIDEO },
+    { "dsplayerlavaudio"         , WINDOW_DIALOG_LAVAUDIO },
+    { "dsplayerlavsplitter"      , WINDOW_DIALOG_LAVSPLITTER },
+    { "dsplayersanear"           , WINDOW_DIALOG_SANEAR },
+    { "dsplayerprocessinfo"      , WINDOW_DIALOG_DSPLAYER_PROCESS_INFO },
+#endif
     { "weather"                  , WINDOW_WEATHER },
     { "screensaver"              , WINDOW_SCREENSAVER },
     { "videoosd"                 , WINDOW_DIALOG_VIDEO_OSD },
@@ -623,6 +648,11 @@ bool CButtonTranslator::Load(bool AlwaysLoad)
   // don't return false - it is to only indicate a fatal error (which this is not)
 #endif
 
+#ifdef HAS_DS_PLAYER
+  if (!m_translatorMap[WINDOW_DIALOG_PLAYER_PROCESS_INFO].empty())
+    m_translatorMap[WINDOW_DIALOG_DSPLAYER_PROCESS_INFO] = m_translatorMap[WINDOW_DIALOG_PLAYER_PROCESS_INFO];
+#endif
+
   // Done!
   m_Loaded = true;
   return true;
@@ -630,6 +660,16 @@ bool CButtonTranslator::Load(bool AlwaysLoad)
 
 bool CButtonTranslator::LoadKeymap(const std::string &keymapPath)
 {
+#ifdef HAS_DS_PLAYER
+  if (g_advancedSettings.m_bIgnoreSystemAppcommand
+    && keymapPath.find("system") != keymapPath.npos
+    && (keymapPath.find("appcommand") != keymapPath.npos
+      || keymapPath.find("gamepad") != keymapPath.npos
+      || keymapPath.find("joystick") != keymapPath.npos)
+    )
+    return false;
+#endif
+
   CXBMCTinyXML xmlDoc;
 
   CLog::Log(LOGINFO, "Loading %s", keymapPath.c_str());

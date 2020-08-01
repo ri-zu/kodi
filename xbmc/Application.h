@@ -153,7 +153,6 @@ public:
   bool DestroyWindow();
   void StartServices();
   void StopServices();
-
   bool StartServer(enum ESERVERS eServer, bool bStart, bool bWait = false);
 
   bool IsCurrentThread() const;
@@ -206,7 +205,6 @@ public:
   void ActivateScreenSaver(bool forceType = false);
   bool SetupNetwork();
   void CloseNetworkShares();
-
   void ShowAppMigrationMessage();
   virtual void Process() override;
   void ProcessSlow();

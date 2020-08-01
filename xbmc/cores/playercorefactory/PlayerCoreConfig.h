@@ -28,6 +28,9 @@
 #ifdef HAS_UPNP
 #include "network/upnp/UPnPPlayer.h"
 #endif
+#ifdef HAS_DS_PLAYER
+#include "DSPlayer.h"
+#endif
 #include "utils/log.h"
 
 class CPlayerCoreConfig
@@ -102,6 +105,12 @@ public:
     else if (m_type.compare("remote") == 0)
     {
       pPlayer = new UPNP::CUPnPPlayer(callback, m_id.c_str());
+    }
+#endif
+#ifdef HAS_DS_PLAYER
+    else if (m_type.compare("dsplayer") == 0)
+    {
+      pPlayer = new CDSPlayer(callback);
     }
 #endif
     else
